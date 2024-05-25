@@ -5,15 +5,16 @@ import useStyles from './styles';
 
 const Posts = () => {
     const posts = useSelector(state => state.posts); // from combineReducers
+    console.log(posts);
     const classes = useStyles()
     return (
         <>
             <h1>Posts</h1>
         {posts && posts.length > 0 &&
-            <>
-                <Post />
-                <Post />
-            </> 
+        <>
+            <Post />
+            <Post />
+        </>
         }
         </>
     )
