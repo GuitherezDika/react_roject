@@ -8,6 +8,15 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AUTH } from '../../constants/actionTypes';
+import {signin, signup} from '../../actions/auth.js'
+
+const initialData = {
+    firstName: "",
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+};
 
 function Auth() {
     const classes = useStyles();
@@ -15,16 +24,29 @@ function Auth() {
     const [isSignup, setIsSignup] = useState(false);
     const [user, setUser] = useState();
     const [profile, setProfile] = useState([]);
+    const [formData, setFormData] = useState(initialData)
 
     const dispatch = useDispatch();
     const history = useNavigate();
 
     const handleShowPassword = () => setShowPassword(prevShowPassword => !prevShowPassword)
-    const handleSubmit = () => {};
-    const handleChange = () => {};
+    const handleSubmit = (e) => {
+        e.preventDefault(); // default react akan render saat submit DON'T DELETE
+        if(isSignup){
+            dispatch(signup(formData, history))
+        } else {
+            dispatch(signin(formData, history))
+        }
+    };
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        })
+    };
     const switchMode = () => {
         setIsSignup(prevSignup => !prevSignup)
-        handleShowPassword(false);
+        setShowPassword(false);
     };
 
     const login = useGoogleLogin({
@@ -73,7 +95,7 @@ function Auth() {
                         isSignup && (
                             <>
                                 <Input name='firstName' label="First Name" handleChange={handleChange} autoFocus half />
-                                <Input name='firstName' label="First Name" handleChange={handleChange} half />
+                                <Input name='lastName' label="Last Name" handleChange={handleChange} half />
                             </>
                         )
                     }
