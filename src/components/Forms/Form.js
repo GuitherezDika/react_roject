@@ -20,12 +20,11 @@ const Form = ({ currentId, setCurrentId }) => {
 
     const handleSubmit = e => {
         e.preventDefault(); // ngehindari untuk refresh saat di klik
-
         if (currentId === 0) {
             dispatch(createPost({ ...postData, name: user?.result?.name }))
             clear()
         } else {
-            dispatch(updatePost({ ...postData, name: user?.result?.name }))
+            dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }))
             clear()
         }
     };
@@ -35,7 +34,7 @@ const Form = ({ currentId, setCurrentId }) => {
             title: '', message: '', tags: '', selectedFile: ''
         })
     };
-    
+
     if (!user?.result?.name) {
         return (
             <Paper className={classes.paper}>

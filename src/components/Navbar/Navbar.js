@@ -3,8 +3,9 @@ import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
 import memories from "../../images/memories.png";
 import useStyles from './styles';
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../constants/actionTypes";
+import {jwtDecode} from 'jwt-decode';
 
 const Navbar = () => {
     const classes = useStyles();
@@ -18,13 +19,21 @@ const Navbar = () => {
     const location = useLocation();
 
     const logout = () => {
-        dispatch({type: LOGOUT});
+        dispatch({ type: LOGOUT });
         history('/')
         setUser(null)
     }
 
-    useEffect(()=>{ // cara 1 = react router doom
-        setUser(JSON.parse(localStorage.getItem('profile')))
+    useEffect(() => { // cara 1 = react router doom
+        setUser(JSON.parse(localStorage.getItem('profile')));
+        
+        if(user) {
+            const token = user.token;
+            if(token) {
+                const decodedToken = jwtDecode(token);
+                if(decodedToken * 1000 < new Date().getTime()) logout();
+            }
+        }
     }, [location]);
 
     return (
@@ -51,12 +60,3 @@ const Navbar = () => {
 }
 
 export default Navbar;
-
-const Navbar2 = () => {
-    const [user, setUser] = useState();
-    useEffect(()=>{
-        console.log('navbar effect =');
-        setUser(JSON.parse(localStorage.getItem('profile')))
-    }, [user]);
-
-}
