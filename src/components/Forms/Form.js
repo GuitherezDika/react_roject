@@ -35,7 +35,7 @@ const Form = ({ currentId, setCurrentId }) => {
             title: '', message: '', tags: '', selectedFile: ''
         })
     };
-
+    
     if (!user?.result?.name) {
         return (
             <Paper className={classes.paper}>
@@ -45,7 +45,6 @@ const Form = ({ currentId, setCurrentId }) => {
             </Paper>
         )
     }
-
     return (
         <Paper className={classes.paper}>
             <form autoComplete="off" noValidate

@@ -18,20 +18,14 @@ const Navbar = () => {
     const location = useLocation();
 
     const logout = () => {
-        dispatch({type: LOGOUT})
-        history('/auth')
+        dispatch({type: LOGOUT});
+        history('/')
         setUser(null)
     }
 
     useEffect(()=>{ // cara 1 = react router doom
         setUser(JSON.parse(localStorage.getItem('profile')))
     }, [location]);
-
-    // useEffect(()=> {// cara 2 REDUX // DON'T DELETE
-    //     if(authData){
-    //         setUser(authData)
-    //     }
-    // },[authData])
 
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
