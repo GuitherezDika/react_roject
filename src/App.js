@@ -8,12 +8,8 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import PostDetails from './components/PostDetails/PostDetails';
 
 const App = () => {
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-
-    useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem('profile')));
-    }, [user]);
-
+    const user = useState(JSON.parse(localStorage.getItem('profile')));
+    
     return (
         <GoogleOAuthProvider clientId='720796861195-0kfgqf7340agfivb86f83qoe6ee1dd1a.apps.googleusercontent.com'>
             <BrowserRouter>
