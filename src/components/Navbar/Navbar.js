@@ -5,7 +5,7 @@ import useStyles from './styles';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../constants/actionTypes";
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const Navbar = () => {
     const classes = useStyles();
@@ -26,12 +26,12 @@ const Navbar = () => {
 
     useEffect(() => { // cara 1 = react router doom
         setUser(JSON.parse(localStorage.getItem('profile')));
-        
-        if(user) {
+
+        if (user) {
             const token = user.token;
-            if(token) {
+            if (token) {
                 const decodedToken = jwtDecode(token);
-                if(decodedToken * 1000 < new Date().getTime()) logout();
+                if (decodedToken * 1000 < new Date().getTime()) logout();
             }
         }
     }, [location]);
