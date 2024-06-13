@@ -49,13 +49,17 @@ function Auth() {
         setShowPassword(false);
     };
 
+    const googleError = () => console.log('Google Sign In was unsuccessful. Try again later');
+    
     const login = useGoogleLogin({
         onSuccess: res => {
             setUser(res)
         },
-        onError: err => console.log(err),
-        scope: 'openid profile email'
-    })
+        onError: err => {
+            googleError(err)
+        },
+        scope: 'open id profile email'
+    });
 
     useEffect(()=> {
         if(user) {
