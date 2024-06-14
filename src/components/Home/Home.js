@@ -38,7 +38,7 @@ const Home = () => {
     const handleAdd = tag => setTags([...tags, tag])
     const handleDelete = tagToDelete => setTags(tags.filter(tag => tag !== tagToDelete));
     const searchPost = () => {
-        if (search.trim()) {// 
+        if (search.trim() || tags) {
             // trim = penghilangan spasi di awal dan akhir
             dispatch(getPostsBySearch({ search, tags: tags.join(',') }))
         } else {
