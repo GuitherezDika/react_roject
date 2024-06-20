@@ -10,7 +10,7 @@ import { jwtDecode } from 'jwt-decode';
 
 const Navbar = () => {
     const classes = useStyles();
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const [user, setUser] = useState();
     const history = useNavigate();
     const dispatch = useDispatch();
     // const selected = useSelector(state => state.auth); // DON'T DELETE
