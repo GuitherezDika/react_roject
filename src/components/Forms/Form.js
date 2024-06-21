@@ -4,6 +4,7 @@ import { Button, Paper, TextField, Typography } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../actions/posts";
+import { useNavigate } from "react-router-dom";
 
 const Form = ({ currentId, setCurrentId }) => {
     const [postData, setPostData] = useState({
@@ -12,6 +13,7 @@ const Form = ({ currentId, setCurrentId }) => {
     const post = useSelector(state => currentId ? state?.posts.posts?.find(p => p._id === currentId) : null);
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useNavigate();
     const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
@@ -21,7 +23,7 @@ const Form = ({ currentId, setCurrentId }) => {
     const handleSubmit = e => {
         e.preventDefault(); // ngehindari untuk refresh saat di klik
         if (currentId === 0) {
-            dispatch(createPost({ ...postData, name: user?.result?.name }))
+            dispatch(createPost({ ...postData, name: user?.result?.name }, history))
             clear()
         } else {
             dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }))
@@ -45,7 +47,7 @@ const Form = ({ currentId, setCurrentId }) => {
         )
     }
     return (
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <form autoComplete="off" noValidate
                 className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography variant="h6" >{currentId ? 'Editing' : 'Creating a Memory'}</Typography>

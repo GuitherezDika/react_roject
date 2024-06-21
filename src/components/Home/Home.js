@@ -29,7 +29,6 @@ const Home = () => {
     const searchQuery = query.get('searchQuery');
 
     const handleKeyPress = e => {
-        console.log(e.keyCode);
         if (e.keyCode === 13) {
             searchPost()
         }
@@ -51,8 +50,9 @@ const Home = () => {
     };
 
     useEffect(() => {
-        dispatch(getPosts())
-    }, [currentId, dispatch, location]);
+        dispatch(getPosts(page))
+    }, [currentId, dispatch]); // MASIH ISSUE SIGN IN == issue saat logout dan sign in
+    // }, [currentId, dispatch, location]);
 
     return (
         <Grow in>
@@ -87,9 +87,11 @@ const Home = () => {
                             </Button>
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
-                        <Paper className={classes.pagination} elevation={6}>
-                            <Pagination page={page} />
-                        </Paper>
+                        {!searchQuery && !tags.length && (
+                            <Paper className={classes.pagination} elevation={6}>
+                                <Pagination page={page} />
+                            </Paper>
+                        )}
                     </Grid>
                 </Grid>
             </Container>
